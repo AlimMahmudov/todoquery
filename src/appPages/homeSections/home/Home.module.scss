@@ -95,10 +95,14 @@
     .TodosList {
       display: flex;
       padding: 10px;
+      border-radius: 5px;
 
       .box {
         display: flex;
         flex-direction: column;
+        background: #aaaaaa;
+        border-radius: 5px;
+        padding: 5px;
       }
     }
   }
