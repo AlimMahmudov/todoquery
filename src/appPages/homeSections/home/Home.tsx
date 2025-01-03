@@ -143,7 +143,7 @@ const Home = () => {
                   <div className={scss.TodosList} key={el._id}>
                     {" "}
                     {/* Добавил key */}
-                    <div>
+                    <div className={scss.box}>
                       <Image
                         width={200}
                         height={200}
