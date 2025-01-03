@@ -19,7 +19,7 @@ interface TodoType {
   description: string;
 }
 
-const TodoList = () => {
+const Home = () => {
   const {
     register,
     handleSubmit,
@@ -178,4 +178,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default Home;
