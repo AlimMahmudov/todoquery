@@ -144,12 +144,14 @@ const Home = () => {
                     {" "}
                     {/* Добавил key */}
                     <div className={scss.box}>
-                      <Image
-                        width={200}
-                        height={200}
-                        src={el.image}
-                        alt={el.title}
-                      />
+                      <div className={scss.images}>
+                        <Image
+                          width={200}
+                          height={200}
+                          src={el.image}
+                          alt={el.title}
+                        />
+                      </div>
                       <h2>{el.title}</h2>
                       <h5>{el.description}</h5>
                       <div className={scss.buttons}>
