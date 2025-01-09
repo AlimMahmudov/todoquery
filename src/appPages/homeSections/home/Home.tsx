@@ -131,12 +131,16 @@ const Home = () => {
                         {...registerEdit("description", { required: true })}
                         placeholder="  Product Description"
                       />
-                      {isSubmittingEdit ? (
-                        <button>Loading</button>
-                      ) : (
-                        <button type="submit">Submit</button>
-                      )}
-                      <button onClick={() => setIsEdit(null)}>Cancel</button>
+                      <div className={scss.buttons}>
+                        {isSubmittingEdit ? (
+                          <button>Loading</button>
+                        ) : (
+                          <button className={scss.submit} type="submit">
+                            Submit
+                          </button>
+                        )}
+                        <button onClick={() => setIsEdit(null)}>Cancel</button>
+                      </div>
                     </form>
                   </div>
                 ) : (
