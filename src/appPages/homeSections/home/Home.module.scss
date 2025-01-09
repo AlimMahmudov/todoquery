@@ -166,12 +166,24 @@
             }
           }
         }
-        .buttonRed {
-          background: red;
-        }
+        .buttons {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0px;
+          .buttonRed {
+            background: red;
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+            &:hover {
+              background: #ff2323;
+            }
+          }
 
-        .buttonGreen {
-          background: green;
+          .buttonGreen {
+            background: green;
+          }
         }
       }
     }
