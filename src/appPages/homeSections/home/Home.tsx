@@ -36,9 +36,10 @@ const Home = () => {
   const [deleteTodoMutation] = useDeleteTodoMutation();
   const [editTodoMutation] = useEditTodoMutation();
   const [deleteTodoAllMutation] = useDeleteTodoAllMutation();
-  const { data, isLoading } = useGetTodoQuery();
+  const { data = [], isLoading } = useGetTodoQuery(); // Начальное значение для data — пустой массив
   const [isEdit, setIsEdit] = useState<number | null>(null);
-  console.log(data);
+
+  console.log("Fetched data:", data);
 
   const onSubmit: SubmitHandler<TodoType> = async (data) => {
     const file = data.image[0];
@@ -55,6 +56,7 @@ const Home = () => {
 
     await postTodoMutation(newData);
   };
+
   const onSubmitEdit: SubmitHandler<TodoType> = async (data) => {
     const file = data.image[0];
     const formData = new FormData();
@@ -108,75 +110,71 @@ const Home = () => {
         <div className={scss.Todos}>
           {isLoading ? (
             <h1>Loading</h1>
-          ) : (
-            <>
-              {data?.map((el) =>
-                isEdit === el._id ? (
-                  <div className={scss.editTodos} key={el._id}>
-                    {" "}
-                    {/* Добавил key */}
-                    <form onSubmit={handleSubmitEdit(onSubmitEdit)}>
-                      <input
-                        type="file"
-                        {...registerEdit("image", { required: true })}
-                        placeholder="  Product Url"
-                      />
-                      <input
-                        type="text"
-                        {...registerEdit("title", { required: true })}
-                        placeholder="  Product Name"
-                      />
-                      <input
-                        type="text"
-                        {...registerEdit("description", { required: true })}
-                        placeholder="  Product Description"
-                      />
-                      <div className={scss.buttons}>
-                        {isSubmittingEdit ? (
-                          <button>Loading</button>
-                        ) : (
-                          <button className={scss.submit} type="submit">
-                            Submit
-                          </button>
-                        )}
-                        <button onClick={() => setIsEdit(null)}>Cancel</button>
-                      </div>
-                    </form>
-                  </div>
-                ) : (
-                  <div className={scss.TodosList} key={el._id}>
-                    {" "}
-                    {/* Добавил key */}
-                    <div className={scss.box}>
-                      <div className={scss.images}>
-                        <Image
-                          width={200}
-                          height={200}
-                          src={el.image}
-                          alt={el.title}
-                        />
-                      </div>
-                      <h2>{el.title}</h2>
-                      <h5>{el.description}</h5>
-                      <div className={scss.buttons}>
-                        <button
-                          onClick={() => deleteTodoMutation(el._id)}
-                          className={scss.buttonRed}
-                        >
-                          Delete
+          ) : Array.isArray(data) ? (
+            data.map((el) =>
+              isEdit === el._id ? (
+                <div className={scss.editTodos} key={el._id}>
+                  <form onSubmit={handleSubmitEdit(onSubmitEdit)}>
+                    <input
+                      type="file"
+                      {...registerEdit("image", { required: true })}
+                      placeholder="  Product Url"
+                    />
+                    <input
+                      type="text"
+                      {...registerEdit("title", { required: true })}
+                      placeholder="  Product Name"
+                    />
+                    <input
+                      type="text"
+                      {...registerEdit("description", { required: true })}
+                      placeholder="  Product Description"
+                    />
+                    <div className={scss.buttons}>
+                      {isSubmittingEdit ? (
+                        <button>Loading</button>
+                      ) : (
+                        <button className={scss.submit} type="submit">
+                          Submit
                         </button>
-                        <button
-                          onClick={() => setIsEdit(el._id)}
-                          className={scss.buttonGreen}
-                        >
-                          Edit
-                        </button>
-                      </div>
+                      )}
+                      <button onClick={() => setIsEdit(null)}>Cancel</button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <div className={scss.TodosList} key={el._id}>
+                  <div className={scss.box}>
+                    <div className={scss.images}>
+                      <Image
+                        width={200}
+                        height={200}
+                        src={el.image}
+                        alt={el.title}
+                      />
+                    </div>
+                    <h2>{el.title}</h2>
+                    <h5>{el.description}</h5>
+                    <div className={scss.buttons}>
+                      <button
+                        onClick={() => deleteTodoMutation(el._id)}
+                        className={scss.buttonRed}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={() => setIsEdit(el._id)}
+                        className={scss.buttonGreen}
+                      >
+                        Edit
+                      </button>
                     </div>
                   </div>
-                )
-              )}
-            </>
+                </div>
+              )
+            )
+          ) : (
+            <p>No data available</p>
           )}
         </div>
       </div>
